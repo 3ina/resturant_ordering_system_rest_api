@@ -10,3 +10,15 @@ class ListItemView(generics.ListAPIView):
 class RetrieveItemView(generics.RetrieveAPIView):
     serializer_class = serializers.ItemSerializer
     queryset = models.Item.objects.all()
+
+
+class ListCategoryView(generics.ListAPIView):
+    serializer_class = serializers.CategorySerializer
+    queryset = models.Category.objects.all()
+
+
+class RetrieveCategoryView(generics.RetrieveAPIView):
+    serializer_class = serializers.CategorySerializer
+    queryset = models.Category.objects.all()
+
+
