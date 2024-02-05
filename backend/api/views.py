@@ -4,18 +4,18 @@ from backend import models
 from rest_framework import permissions
 
 
+# -----------------------item View---------------------
 class RetrieveUpdateDeleteItem(
     generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.ItemSerializer
     queryset = models.Item.objects.all()
-    permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
 
 class CreateListItemView(generics.ListCreateAPIView):
     serializer_class = serializers.ItemSerializer
     queryset = models.Item.objects.all()
-    permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
-
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
 
 
 class ListItemView(generics.ListAPIView):
@@ -28,6 +28,21 @@ class RetrieveItemView(generics.RetrieveAPIView):
     queryset = models.Item.objects.all()
 
 
+# -----------------------item View---------------------
+
+class RetrieveUpdateDeleteCategory(
+    generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = serializers.CategorySerializer
+    queryset = models.Category.objects.all()
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+
+class CreateListCategoryView(generics.ListCreateAPIView):
+    serializer_class = serializers.CategorySerializer
+    queryset = models.Category.objects.all()
+    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+
+
 class ListCategoryView(generics.ListAPIView):
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
@@ -36,5 +51,3 @@ class ListCategoryView(generics.ListAPIView):
 class RetrieveCategoryView(generics.RetrieveAPIView):
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
-
-

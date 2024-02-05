@@ -14,4 +14,8 @@ urlpatterns = [
          ,name='admin-create-item'),
     path("admin/items/<int:pk>/",views.RetrieveUpdateDeleteItem.as_view()
          ,name='admin-detail-item'),
+    path("admin/category/",views.CreateListCategoryView.as_view()
+         ,name='admin-create-category'),
+    path("admin/category/<int:pk>/",views.RetrieveUpdateDeleteCategory.as_view()
+         ,name='admin-detail-category'),
 ]
