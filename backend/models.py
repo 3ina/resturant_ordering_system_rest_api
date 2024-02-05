@@ -6,6 +6,9 @@ class Category(models.Model):
     name = models.CharField(max_length=30)
     image = models.ImageField("category/")
 
+    def __str__(self):
+        return self.name
+
 
 class Item(models.Model):
     name = models.CharField(max_length=30)
@@ -25,4 +28,9 @@ class Comment(models.Model):
     item = models.ForeignKey(Item,on_delete=models.CASCADE,related_name="comments")
     user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE,related_name="comments")
     text = models.TextField()
-    rating = models.IntegerField(validators=[MinValueValidator(0),MaxValueValidator(5)])
+    rating = models.IntegerField(
+        validators=[MinValueValidator(0),MaxValueValidator(5)]
+    )
+
+    def __str__(self):
+        return f"{self.user}:{self.item}"
