@@ -28,7 +28,7 @@ class RetrieveItemView(generics.RetrieveAPIView):
     queryset = models.Item.objects.all()
 
 
-# -----------------------item View---------------------
+# -----------------------category View---------------------
 
 class RetrieveUpdateDeleteCategory(
     generics.RetrieveUpdateDestroyAPIView):
@@ -51,3 +51,7 @@ class ListCategoryView(generics.ListAPIView):
 class RetrieveCategoryView(generics.RetrieveAPIView):
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
+
+
+# -----------------------comment View---------------------
+
