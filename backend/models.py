@@ -55,4 +55,5 @@ class Payment(models.Model):
 class OrderItem(models.Model):
     item = models.ForeignKey(Item, on_delete=models.SET_NULL,null=True)
     quantity = models.PositiveSmallIntegerField()
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name="orderItems")
     order = models.ForeignKey(Order, related_name="orderItems", on_delete=models.CASCADE)

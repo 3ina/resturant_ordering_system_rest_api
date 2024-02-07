@@ -4,8 +4,7 @@ from rest_framework.response import Response
 from backend.api import serializers
 from backend import models
 from rest_framework import permissions
-from backend.api import permissions as permissionApi
-
+from rest_framework.views import APIView
 
 # -----------------------item View---------------------
 class RetrieveUpdateDeleteItem(
@@ -59,7 +58,7 @@ class RetrieveCategoryView(generics.RetrieveAPIView):
 # -----------------------order View---------------------
 class CreateListOrder(generics.ListCreateAPIView):
     queryset = models.Order.objects.all()
-    permission_classes = [permissionApi.IsOwnerOrderOrAdmin,permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.OrderSerializers
 
     def perform_create(self, serializer):
@@ -69,3 +68,32 @@ class CreateListOrder(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return models.Order.objects.filter(user=user)
+
+
+class OrderDetail(generics.RetrieveAPIView):
+    queryset = models.Order.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.OrderSerializers
+    def get_queryset(self):
+        user = self.request.user
+        return models.Order.objects.filter(user=user)
+# -----------------------orderItem View---------------------
+
+class CreateOrderItem(generics.CreateAPIView):
+    queryset = models.OrderItem.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.OrderItemSerializers
+
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        order_pk = self.kwargs.get("pk")
+        try:
+            order = models.Order.objects.get(pk=order_pk,user=user)
+        except:
+            raise Exception("order not found")
+        serializer.save(user=user,order=order)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.OrderItem.objects.filter(user=user,order__user=user)

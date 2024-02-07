@@ -4,6 +4,10 @@ from backend.api import views
 urlpatterns = [
     path("order/",views.CreateListOrder.as_view()
          ,name="list-orders"),
+    path("order/<int:pk>/",views.OrderDetail.as_view()
+         ,name="detail-order"),
+    path("order/<int:pk>/createOrderItem",views.CreateOrderItem.as_view()
+         ,name="create-orderItem"),
     path("items/",views.ListItemView.as_view()
          ,name="list-items"),
     path("items/<int:pk>/", views.RetrieveItemView.as_view()
