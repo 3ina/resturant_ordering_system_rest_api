@@ -43,6 +43,6 @@ class OrderSerializers(serializers.ModelSerializer):
 
 class PaymentSerializers(serializers.ModelSerializer):
     class Meta:
-        models = models.Payment
+        model = models.Payment
         fields = "__all__"
 
