@@ -2,6 +2,8 @@ from django.urls import path
 from backend.api import views
 
 urlpatterns = [
+    path("order/",views.CreateListOrder.as_view()
+         ,name="list-orders"),
     path("items/",views.ListItemView.as_view()
          ,name="list-items"),
     path("items/<int:pk>/", views.RetrieveItemView.as_view()

@@ -26,3 +26,20 @@ class CategorySerializer(serializers.ModelSerializer):
         model = models.Category
         fields = "__all__"
 
+
+class OrderItemSerializers(serializers.ModelSerializer):
+    item = serializers.HyperlinkedRelatedField(
+        queryset=models.Item.objects.all(),
+        view_name="detail-item",
+    )
+
+    class Meta:
+        model = models.OrderItem
+        fields = "__all__"
+
+class OrderSerializers(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = models.Order
+        fields = "__all__"

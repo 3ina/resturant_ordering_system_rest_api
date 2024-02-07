@@ -1,7 +1,10 @@
-from rest_framework import generics
+from rest_framework import generics, status
+from rest_framework.response import Response
+
 from backend.api import serializers
 from backend import models
 from rest_framework import permissions
+from backend.api import permissions as permissionApi
 
 
 # -----------------------item View---------------------
@@ -53,5 +56,16 @@ class RetrieveCategoryView(generics.RetrieveAPIView):
     queryset = models.Category.objects.all()
 
 
-# -----------------------comment View---------------------
+# -----------------------order View---------------------
+class CreateListOrder(generics.ListCreateAPIView):
+    queryset = models.Order.objects.all()
+    permission_classes = [permissionApi.IsOwnerOrderOrAdmin,permissions.IsAuthenticated]
+    serializer_class = serializers.OrderSerializers
 
+    def perform_create(self, serializer):
+        user = self.request.user
+        serializer.save(user=user)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.Order.objects.filter(user=user)
