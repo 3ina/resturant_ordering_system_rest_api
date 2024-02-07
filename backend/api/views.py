@@ -79,7 +79,7 @@ class OrderDetail(generics.RetrieveAPIView):
         return models.Order.objects.filter(user=user)
 # -----------------------orderItem View---------------------
 
-class CreateOrderItem(generics.CreateAPIView):
+class CreateOrderItem(generics.ListCreateAPIView):
     queryset = models.OrderItem.objects.all()
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = serializers.OrderItemSerializers
@@ -97,3 +97,18 @@ class CreateOrderItem(generics.CreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return models.OrderItem.objects.filter(user=user,order__user=user)
+
+
+class CreatePayment(generics.ListCreateAPIView):
+    queryset = models.Payment.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.PaymentSerializers
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        order_pk = self.kwargs.get("pk")
+        try:
+            order = models.Order.objects.get(pk=order_pk,user=user)
+        except:
+            raise Exception("order not found")
+        serializer.save(user=user,order=order)

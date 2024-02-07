@@ -6,8 +6,10 @@ urlpatterns = [
          ,name="list-orders"),
     path("order/<int:pk>/",views.OrderDetail.as_view()
          ,name="detail-order"),
+    path("order/<int:pk>/createPayment",views.CreatePayment.as_view()
+         ,name="detail-order"),
     path("order/<int:pk>/createOrderItem",views.CreateOrderItem.as_view()
-         ,name="create-orderItem"),
+         ,name="create-list-orderItem"),
     path("items/",views.ListItemView.as_view()
          ,name="list-items"),
     path("items/<int:pk>/", views.RetrieveItemView.as_view()
