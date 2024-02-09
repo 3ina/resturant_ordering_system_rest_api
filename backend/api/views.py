@@ -98,6 +98,7 @@ class CreateOrderItem(generics.ListCreateAPIView):
         user = self.request.user
         return models.OrderItem.objects.filter(user=user,order__user=user)
 
+# -----------------------Payment View---------------------
 
 class CreatePayment(generics.ListCreateAPIView):
     queryset = models.Payment.objects.all()
@@ -112,3 +113,9 @@ class CreatePayment(generics.ListCreateAPIView):
         except:
             raise Exception("order not found")
         serializer.save(user=user,order=order)
+
+
+class ListPayment(generics.ListAPIView):
+    queryset = models.Payment.objects.all().order_by("paymentDate")
+    permission_classes = [permissions.IsAdminUser]
+    serializer_class = serializers.PaymentSerializers
