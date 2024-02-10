@@ -27,5 +27,7 @@ urlpatterns = [
     path("admin/category/<int:pk>/",views.RetrieveUpdateDeleteCategory.as_view()
          ,name='admin-detail-category'),
     path("admin/payments",views.ListPayment.as_view()
-         ,name="admin-list-payment")
+         ,name="admin-list-payment"),
+    path("admin/orders/",views.ListAllOrders.as_view()
+         ,name="admin-list-orders"),
 ]

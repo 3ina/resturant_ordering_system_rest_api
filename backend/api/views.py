@@ -77,6 +77,11 @@ class OrderDetail(generics.RetrieveAPIView):
     def get_queryset(self):
         user = self.request.user
         return models.Order.objects.filter(user=user)
+
+class ListAllOrders(generics.ListAPIView):
+    queryset = models.Order.objects.all()
+    permission_classes = [permissions.IsAdminUser,permissions.IsAuthenticated]
+    serializer_class = serializers.OrderSerializers
 # -----------------------orderItem View---------------------
 
 class CreateOrderItem(generics.ListCreateAPIView):
