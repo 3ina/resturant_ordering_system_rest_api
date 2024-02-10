@@ -1,10 +1,8 @@
-from rest_framework import generics, status
-from rest_framework.response import Response
-
+from rest_framework import generics
+from django.contrib.auth.models import User
 from backend.api import serializers
 from backend import models
 from rest_framework import permissions
-from rest_framework.views import APIView
 
 # -----------------------item View---------------------
 class RetrieveUpdateDeleteItem(
@@ -82,6 +80,16 @@ class ListAllOrders(generics.ListAPIView):
     queryset = models.Order.objects.all()
     permission_classes = [permissions.IsAdminUser,permissions.IsAuthenticated]
     serializer_class = serializers.OrderSerializers
+
+class RetrieveUserOrder(generics.ListAPIView):
+    queryset = models.Order.objects.all()
+    permission_classes = [permissions.IsAuthenticated,permissions.IsAdminUser]
+    serializer_class = [serializers.OrderSerializers]
+
+    def get_queryset(self):
+        user_id = self.kwargs.get("pk")
+        user = User.objects.get(pk=user_id)
+        return models.Order.objects.filter(user=user)
 # -----------------------orderItem View---------------------
 
 class CreateOrderItem(generics.ListCreateAPIView):

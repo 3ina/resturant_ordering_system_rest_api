@@ -30,4 +30,6 @@ urlpatterns = [
          ,name="admin-list-payment"),
     path("admin/orders/",views.ListAllOrders.as_view()
          ,name="admin-list-orders"),
+    path("admin/<int:pk>/orders/",views.RetrieveUserOrder.as_view()
+         ,name="admin-list-orders-user"),
 ]
